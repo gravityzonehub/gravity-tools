@@ -1,100 +1,101 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Gravity-Zone Tools</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0b0e14; --text:#f2f5f8; --hint:#c7d0df;
-      --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
-      --accent:#ff9800; --r:18px; --shadow:0 10px 28px rgba(0,0,0,.35);
-      --g1:#ff9800; --g2:#8a2be2; --g3:#00ffd0;
-      --neon1:#ff9800; --neon2:#8a2be2; --neon3:#00ffd0;
-    }
-    *{box-sizing:border-box}
-    html,body{
-      height:100%;margin:0;background:var(--bg);color:var(--text);
-      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      letter-spacing:-.1px; /* یک ذره جمع‌وجورتر */
-    }
-    a{text-decoration:none;color:inherit}
-    .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px}
-    .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Gravity-Zone Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0e14; --text:#f2f5f8; --hint:#c7d0df;
+    --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
+    --accent:#ff9800; --r:18px; --shadow:0 10px 28px rgba(0,0,0,.35);
+    --g1:#ff9800; --g2:#8a2be2; --g3:#00ffd0;
+    --neon1:#ff9800; --neon2:#8a2be2; --neon3:#00ffd0;
+  }
+  *{box-sizing:border-box}
+  html,body{
+    height:100%;margin:0;background:var(--bg);color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    letter-spacing:-.1px;
+  }
+  a{text-decoration:none;color:inherit}
 
-    .header{
-      width:min(1100px,95%);margin-top:10px;padding:12px 14px;border-radius:var(--r);
-      background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(10px);
-      box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:12px
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .disc{width:40px;height:40px;border-radius:12px;background:conic-gradient(from 210deg, var(--g1), var(--g2), var(--g3), var(--g1));position:relative;box-shadow:0 0 22px rgba(255,152,0,.25)}
-    .disc:after{content:"";position:absolute;inset:2px;border-radius:10px;background:#0c1119}
-    .title{font-weight:800;letter-spacing:-.2px;font-size:18px}
-    .sub{color:var(--hint);font-size:12px;margin-top:1px}
-    .badge{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);font-size:12px}
+  /* subtle galaxy field */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; opacity:.22;
+    background:
+      radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.9) 40%, transparent 41%),
+      radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,.8) 40%, transparent 41%),
+      radial-gradient(1.3px 1.3px at 40% 80%, rgba(255,255,255,.8) 40%, transparent 41%),
+      radial-gradient(800px 800px at 10% 10%, rgba(255,152,0,.05), transparent 55%),
+      radial-gradient(800px 800px at 90% 90%, rgba(138,43,226,.06), transparent 55%),
+      radial-gradient(800px 800px at 50% 0%, rgba(0,255,208,.05), transparent 55%);
+    filter:saturate(115%);
+  }
 
-    .grid{width:min(1100px,95%);display:grid;gap:16px;margin:6px 0 18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-    .card{
-      position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);
-      border:1px solid var(--stroke);backdrop-filter:blur(8px);box-shadow:var(--shadow);
-      padding:16px;transition:transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease
-    }
-    .card:hover{transform:translateY(-3px)}
-    /* هاله دکور روی کارت‌ها */
-    .card:before{
-      content:"";position:absolute;inset:-1px;border-radius:calc(var(--r) + 1px);padding:1px;
-      background:linear-gradient(135deg, rgba(255,152,0,.45), rgba(138,43,226,.35), rgba(0,255,208,.35));
-      opacity:0;transition:opacity .25s ease;
-      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none
-    }
-    .card:hover:before{opacity:.8}
-    .corner{position:absolute;width:22px;height:22px;border-radius:50%;filter:blur(10px);opacity:.6;pointer-events:none}
-    .c1{top:-6px;left:-6px;background:radial-gradient(circle at 30% 30%, rgba(255,152,0,.65), transparent 60%)}
-    .c2{bottom:-8px;right:-8px;background:radial-gradient(circle at 70% 70%, rgba(138,43,226,.55), transparent 60%)}
-    .card h3{margin:0 0 4px;font-size:16px;font-weight:800} /* تیتر تمیز و کوچک */
-    .card p{margin:0;color:var(--hint);font-size:13px;line-height:1.65}
+  .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px}
+  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
-    /* دکمه‌ها: فونت یکدست، سایز جمع‌وجور + قاب نئون */
-    .btn{
-      position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:10px 12px;border-radius:14px;border:1px solid var(--stroke);
-      font-weight:700;font-size:12.5px; /* کوچک و خوانا */
-      cursor:pointer;transition:transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-      letter-spacing:.1px;
-    }
-    .btn:active{transform:translateY(1px) scale(.99)}
-    .btn:focus-visible{outline:none;box-shadow:0 0 0 6px rgba(255,152,0,.12)}
+  .header{
+    width:min(1100px,95%);margin-top:10px;padding:12px 14px;border-radius:var(--r);
+    background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(10px);
+    box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:12px
+  }
+  .brand{display:flex;align-items:center;gap:12px}
+  .disc{width:40px;height:40px;border-radius:12px;background:conic-gradient(from 210deg, var(--g1), var(--g2), var(--g3), var(--g1));position:relative;box-shadow:0 0 22px rgba(255,152,0,.25)}
+  .disc:after{content:"";position:absolute;inset:2px;border-radius:10px;background:#0c1119}
+  .title{font-weight:800;letter-spacing:-.2px;font-size:18px}
+  .sub{color:var(--hint);font-size:12px;margin-top:1px}
+  .badge{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);font-size:12px}
 
-    /* قاب نئون برای همه دکمه‌ها */
-    .btn::after{
-      content:""; position:absolute; inset:0; border-radius:inherit; padding:1px;
-      background:linear-gradient(135deg, var(--neon1), var(--neon2), var(--neon3));
-      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
-      opacity:.85; filter:saturate(120%) blur(.0px);
-    }
-    .btn:hover{box-shadow:0 0 14px rgba(255,152,0,.25), 0 0 24px rgba(138,43,226,.15), 0 0 20px rgba(0,255,208,.15)}
+  .grid{
+    width:min(1100px,95%);display:grid;gap:16px;margin:6px 0 18px;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr))
+  }
+  .card{
+    position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);
+    border:1px solid var(--stroke);backdrop-filter:blur(8px);box-shadow:var(--shadow);
+    padding:16px;transition:transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    display:flex; flex-direction:column; min-height:200px; /* هم‌قدی کارت‌ها */
+  }
+  .card:hover{transform:translateY(-3px)}
+  .card:before{
+    content:"";position:absolute;inset:-1px;border-radius:calc(var(--r) + 1px);padding:1px;
+    background:linear-gradient(135deg, rgba(255,152,0,.35), rgba(138,43,226,.28), rgba(0,255,208,.28));
+    opacity:0;transition:opacity .25s ease;
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none
+  }
+  .card:hover:before{opacity:.85}
+  .corner{position:absolute;width:22px;height:22px;border-radius:50%;filter:blur(10px);opacity:.6;pointer-events:none}
+  .c1{top:-6px;left:-6px;background:radial-gradient(circle at 30% 30%, rgba(255,152,0,.6), transparent 60%)}
+  .c2{bottom:-8px;right:-8px;background:radial-gradient(circle at 70% 70%, rgba(138,43,226,.5), transparent 60%)}
+  .card h3{margin:0 0 6px;font-size:16px;font-weight:800}
+  .card p{margin:0;color:var(--hint);font-size:13px;line-height:1.65}
+  .actions{margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;} /* دکمه‌ها پایین کارت */
 
-    .btn-primary{
-      background:var(--accent);border-color:var(--accent);color:#000;
-      box-shadow:0 8px 18px rgba(0,0,0,.25)
-    }
-    .btn-ghost{
-      background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.2)
-    }
-    .btn-ghost:hover{background:rgba(255,255,255,.05)}
-    .btn-link{
-      background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.15)
-    }
-    .btn-link:hover{background:rgba(255,255,255,.04)}
-
-    .footer{width:min(1100px,95%);display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:8px}
-    .note{padding:12px 14px;background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);color:var(--hint);font-size:12px;text-align:center;backdrop-filter:blur(8px)}
-  </style>
+  /* --- دکمه یکنواخت: زمینه مشکی، متن نارنجی + قاب نئون --- */
+  .btn{
+    position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 14px;border-radius:14px;background:#0e1117;border:1px solid rgba(255,255,255,.16);
+    color:var(--accent); font-weight:800;font-size:12.5px; letter-spacing:.1px; cursor:pointer;
+    transition:transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn:active{transform:translateY(1px) scale(.99)}
+  .btn:focus-visible{outline:none;box-shadow:0 0 0 6px rgba(255,152,0,.12)}
+  .btn::after{
+    content:""; position:absolute; inset:0; border-radius:inherit; padding:1px;
+    background:linear-gradient(135deg, var(--neon1), var(--neon2), var(--neon3));
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+    opacity:.85; filter:saturate(120%);
+  }
+  .btn:hover{background:#10141c; box-shadow:0 0 16px rgba(255,152,0,.22), 0 0 24px rgba(138,43,226,.15), 0 0 20px rgba(0,255,208,.14)}
+  /* اگر جایی بخوای دکمه پر باشه فقط این کلاس رو اضافه کن */
+  .btn--filled{ background:var(--accent); color:#000; border-color:var(--accent); }
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -117,9 +118,9 @@
         <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🪙 Airdrops & News</h3>
         <p>Crypto news + verified airdrops (auto-refresh).</p>
-        <div class="row" style="margin-top:10px">
-          <a class="btn btn-primary" href="tools/crypto/">Open</a>
-          <a class="btn btn-link" href="tools/crypto/">Details</a>
+        <div class="actions">
+          <a class="btn" href="tools/crypto/">Open</a>
+          <a class="btn" href="tools/crypto/">Details</a>
         </div>
       </article>
 
@@ -127,53 +128,63 @@
         <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🔐 Proxy Finder Zone</h3>
         <p>Stable, auto-generated Telegram proxies.</p>
-        <div class="row" style="margin-top:10px"><a class="btn btn-ghost" href="tools/proxy/">Get Proxy</a></div>
+        <div class="actions">
+          <a class="btn" href="tools/proxy/">Get Proxy</a>
+        </div>
       </article>
 
       <article class="card">
         <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🧠 AI Chat Models</h3>
         <p>GPT</p>
-        <div class="row" style="margin-top:10px"><a class="btn btn-primary" href="tools/ai/">Start Chat</a></div>
+        <div class="actions">
+          <a class="btn" href="tools/ai/">Start Chat</a>
+        </div>
       </article>
 
       <article class="card">
         <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🗣 Translator & converter</h3>
         <p>FA ⇄ EN + RU / TR / UA / ID • Voice↔Text.</p>
-        <div class="row" style="margin-top:10px"><a class="btn btn-ghost" href="tools/translate/">Translate</a></div>
-        <div class="row" style="margin-top:10px"><a class="btn btn-primary" href="tools/dictionary/">Open Dictionary</a></div>
-     </article>
+        <div class="actions">
+          <a class="btn" href="tools/translate/">Translate</a>
+          <a class="btn" href="tools/dictionary/">Open Dictionary</a>
+        </div>
+      </article>
 
       <article class="card">
         <span class="corner c1"></span><span class="corner c2"></span>
         <h3>⚡ LIVE News</h3>
         <p>Auto updates • multiple sources • read-aloud.</p>
-        <div class="row" style="margin-top:10px"><a class="btn class btn-primary" href="tools/live-news/">Open LIVE News</a></div>
+        <div class="actions">
+          <a class="btn" href="tools/live-news/">Open LIVE News</a>
+        </div>
       </article>
       
       <article class="card">
         <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🖼️ My Art Collection & NFT</h3>
         <p>Fullscreen slider. Crisp. Fast.</p>
-        <div class="row" style="margin-top:10px"><a class="btn btn-ghost" href="tools/gallery/">View Gallery</a></div>
+        <div class="actions">
+          <a class="btn" href="tools/gallery/">View Gallery</a>
+        </div>
       </article>
 
       <article class="card">
         <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🎧 Gravity-Music Z👽ne Player</h3>
         <p>Local player + URL + Spotify embed.</p>
-        <div class="row" style="margin-top:10px"><a class="btn btn-primary" href="tools/music/">Open Music</a></div>
+        <div class="actions">
+          <a class="btn" href="tools/music/">Open Music</a>
+        </div>
       </article>
     </section>
 
     <section class="footer"><div class="note">© Gravity-Z👽ne</div></section>
   </div>
+
   <script>
-    try{
-      const tg = window.Telegram?.WebApp;
-      tg?.ready(); tg?.expand();
-    }catch(e){}
+    try{const tg=window.Telegram?.WebApp; tg?.ready(); tg?.expand();}catch(e){}
   </script>
 </body>
 </html>
