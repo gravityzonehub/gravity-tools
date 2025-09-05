@@ -9,175 +9,117 @@
     :root{
       --bg:#0b0e14; --text:#f2f5f8; --hint:#c7d0df;
       --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
-      --accent:#ff9800; --r:16px; --shadow:0 8px 20px rgba(0,0,0,.35);
+      --accent:#ff9800; --r:18px; --shadow:0 10px 28px rgba(0,0,0,.35);
+      --g1:#ff9800; --g2:#8a2be2; --g3:#00ffd0;
     }
     *{box-sizing:border-box}
-    html,body{
-      height:100%;margin:0;background:var(--bg);color:var(--text);
-      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif
-    }
+    html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
     a{text-decoration:none;color:inherit}
-    .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:14px;padding:14px}
-    .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-
-    .header{
-      width:min(1100px,95%);margin-top:6px;padding:10px 12px;border-radius:var(--r);
-      background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(8px);
-      box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:10px
-    }
-    .brand{display:flex;align-items:center;gap:10px}
-    .disc{width:36px;height:36px;border-radius:10px;background:conic-gradient(from 210deg, var(--accent), #8a2be2, #00ffd0, var(--accent))}
-    .title{font-weight:800;font-size:16px}
-    .sub{color:var(--hint);font-size:11.5px}
-    .badge{padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);font-size:11px}
-
-    .grid{width:min(1100px,95%);display:grid;gap:10px;margin:6px 0 14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-    .card{
-      position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);
-      border:1px solid var(--stroke);backdrop-filter:blur(6px);box-shadow:var(--shadow);
-      padding:10px;display:flex;flex-direction:column;min-height:150px;transition:transform .15s ease
-    }
-    .card:hover{transform:translateY(-2px)}
-    .card h3{margin:0 0 2px;font-size:15px;font-weight:800}
-    .card p{margin:0;color:var(--hint);font-size:12.5px;line-height:1.45}
-    .actions{margin-top:4px;display:flex;gap:8px;flex-wrap:wrap}
-
-    /* --- Buttons (unified style) --- */
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:6px;
-      padding:8px 12px;border-radius:12px;
-      background:#1a1713;border:1px solid var(--accent);color:var(--accent);
-      font-weight:700;font-size:12.5px;cursor:pointer;
-      transition:transform .08s ease, box-shadow .2s ease, background .2s ease
-    }
-    .btn:hover{background:#211c17;box-shadow:0 0 10px rgba(255,152,0,.25)}
-    .btn:active{transform:translateY(1px) scale(.98)}
-
-    /* --- Hamburger same as btn --- */
-    .hambtn{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:8px 12px;border-radius:12px;
-      background:#1a1713;border:1px solid var(--accent);color:var(--accent);
-      font-weight:700;font-size:12.5px;cursor:pointer
-    }
-    .hambtn .bars{width:14px;height:10px;position:relative}
-    .hambtn .bars:before,.hambtn .bars:after,.hambtn .mid{
-      content:"";position:absolute;left:0;right:0;height:2px;background:var(--accent);border-radius:2px
-    }
-    .hambtn .bars:before{top:0}.hambtn .mid{top:4px}.hambtn .bars:after{bottom:0}
-
-    /* Drawer */
-    .drawer{position:fixed;inset:0 0 0 auto;width:min(300px,90%);background:#0d121b;
-      border-left:1px solid var(--stroke);box-shadow:-18px 0 30px rgba(0,0,0,.5);
-      transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;z-index:50}
-    .drawer.active{transform:translateX(0)}
-    .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:12px;border-bottom:1px solid var(--stroke)}
-    .drawer-title{font-weight:800;color:var(--accent)}
-    .drawer-close{background:transparent;border:1px solid var(--stroke);color:var(--text);padding:5px 8px;border-radius:8px;cursor:pointer}
-    .links{display:grid;gap:8px;padding:12px}
-    .linkitem{padding:10px;border:1px solid var(--stroke);border-radius:10px;background:rgba(255,255,255,.04);font-weight:600}
-    .linkitem:hover{background:rgba(255,255,255,.07)}
-
-    .footer{width:min(1100px,95%);margin-bottom:6px}
-    .note{padding:10px;background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);color:var(--hint);font-size:11.5px;text-align:center}
+    .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px}
+    .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .header{width:min(1100px,95%);margin-top:10px;padding:14px 16px;border-radius:var(--r);background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(10px);box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .disc{width:44px;height:44px;border-radius:12px;background:conic-gradient(from 210deg, var(--g1), var(--g2), var(--g3), var(--g1));position:relative;box-shadow:0 0 22px rgba(255,152,0,.25)}
+    .disc:after{content:"";position:absolute;inset:2px;border-radius:10px;background:#0c1119}
+    .title{font-weight:800;letter-spacing:-.2px}
+    .sub{color:var(--hint);font-size:13px;margin-top:2px}
+    .badge{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);font-size:12px}
+    .grid{width:min(1100px,95%);display:grid;gap:16px;margin:6px 0 18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+    .card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(8px);box-shadow:var(--shadow);padding:18px;transition:transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease}
+    .card:hover{transform:translateY(-3px)}
+    /* FIX: ensure overlay never captures clicks */
+    .card:before{content:"";position:absolute;inset:-1px;border-radius:calc(var(--r) + 1px);padding:1px;background:linear-gradient(135deg, rgba(255,152,0,.55), rgba(138,43,226,.45), rgba(0,255,208,.45));opacity:0;transition:opacity .25s ease;-webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+    .card:hover:before{opacity:.8}
+    .corner{position:absolute;width:22px;height:22px;border-radius:50%;filter:blur(10px);opacity:.6;pointer-events:none}
+    .c1{top:-6px;left:-6px;background:radial-gradient(circle at 30% 30%, rgba(255,152,0,.65), transparent 60%)}
+    .c2{bottom:-8px;right:-8px;background:radial-gradient(circle at 70% 70%, rgba(138,43,226,.55), transparent 60%)}
+    .card h3{margin:0 0 6px;font-size:18px;font-weight:800}
+    .card p{margin:0;color:var(--hint);font-size:13.5px;line-height:1.7}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:14px;border:1px solid var(--stroke);font-weight:800;cursor:pointer;transition:transform .08s ease, box-shadow .2s ease}
+    .btn:active{transform:translateY(1px) scale(.99)}
+    .btn-primary{background:var(--accent);border-color:var(--accent);color:#000;box-shadow:0 10px 20px rgba(0,0,0,.25)}
+    .btn-ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+    .btn-ghost:hover{background:rgba(255,152,0,.08)}
+    .btn-link{background:transparent;color:var(--text);border:1px solid var(--stroke)}
+    .btn-link:hover{background:rgba(255,255,255,.05)}
+    .btn:focus-visible{outline:none;box-shadow:0 0 0 6px rgba(255,152,0,.12)}
+    .footer{width:min(1100px,95%);display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:8px}
+    .note{padding:14px 16px;background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);color:var(--hint);font-size:13px;text-align:center;backdrop-filter:blur(8px)}
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="header">
       <div class="brand">
-        <div class="disc"></div>
+        <div class="disc" aria-hidden="true"></div>
         <div>
           <div class="title">Gravity-Zone Tools</div>
           <div class="sub">We will convert all your accounts to Premium</div>
         </div>
       </div>
       <div class="row">
-        <a class="badge" href="tools/ai/">AI Quick Chat</a>
-        <span class="badge">v1 • Prism</span>
-        <button class="hambtn" id="openDrawer">
-          <span class="bars"><span class="mid"></span></span>
-          My other platforms
-        </button>
+        <a class="badge" href="../tools/ai/">AI Quick Chat</a>
+        <span class="badge">v1 â€¢ Prism</span>
       </div>
     </header>
 
-    <!-- Drawer -->
-    <aside class="drawer" id="drawer">
-      <div class="drawer-header">
-        <div class="drawer-title">My other platforms</div>
-        <button class="drawer-close" id="closeDrawer">Close</button>
-      </div>
-      <nav class="links">
-        <a class="linkitem" href="https://instagram.com/" target="_blank">📷 Instagram</a>
-        <a class="linkitem" href="https://t.me/" target="_blank">📡 Telegram</a>
-        <a class="linkitem" href="https://soundcloud.com/" target="_blank">🎶 SoundCloud</a>
-        <a class="linkitem" href="https://github.com/gravityzonehub" target="_blank">💻 GitHub</a>
-        <a class="linkitem" href="https://discord.com/" target="_blank">👾 Discord</a>
-        <a class="linkitem" href="https://youtube.com/" target="_blank">▶️ YouTube</a>
-        <a class="linkitem" href="#" target="_blank">🌐 Website</a>
-      </nav>
-    </aside>
-
     <section class="grid">
       <article class="card">
-        <h3>🪙 Airdrops & News</h3>
-        <p>Crypto news + verified airdrops (auto-refresh).</p>
-        <div class="actions">
-          <a class="btn" href="tools/crypto/">Open</a>
-          <a class="btn" href="tools/crypto/">Details</a>
+        <span class="corner c1"></span><span class="corner c2"></span>
+        <h3>ðŸª™ Airdrops & News</h3>
+        <p>Crypto news + verified airdrops (autoâ€‘refresh).</p>
+        <div class="row" style="margin-top:10px">
+          <a class="btn btn-primary" href="../tools/crypto/">Open</a>
+          <a class="btn btn-link" href="../tools/crypto/">Details</a>
         </div>
       </article>
 
       <article class="card">
-        <h3>🔐 Proxy Finder Zone</h3>
-        <p>Stable, auto-generated Telegram proxies.</p>
-        <div class="actions"><a class="btn" href="tools/proxy/">Get Proxy</a></div>
+        <span class="corner c1"></span><span class="corner c2"></span>
+        <h3>ðŸ” Proxy Finder Zone</h3>
+        <p>Stable, autoâ€‘generated Telegram proxies.</p>
+        <div class="row" style="margin-top:10px"><a class="btn btn-ghost" href="../tools/proxy/">Get Proxy</a></div>
       </article>
 
       <article class="card">
-        <h3>🧠 AI Chat Models</h3>
-        <p>GPT</p>
-        <div class="actions"><a class="btn" href="tools/ai/">Start Chat</a></div>
+        <span class="corner c1"></span><span class="corner c2"></span>
+        <h3>ðŸ§  AI Chat Models</h3>
+        <p>GPT / LLaMA â€¢ multilingual â€¢ switch anytime.</p>
+        <div class="row" style="margin-top:10px"><a class="btn btn-primary" href="../tools/ai/">Start Chat</a></div>
       </article>
 
       <article class="card">
-        <h3>🗣 Translator & converter</h3>
-        <p>FA ⇄ EN + RU / TR / UA / ID • Voice↔Text.</p>
-        <div class="actions">
-          <a class="btn" href="tools/translate/">Translate</a>
-          <a class="btn" href="tools/dictionary/">Open Dictionary</a>
-        </div>
+        <span class="corner c1"></span><span class="corner c2"></span>
+        <h3>ðŸ—£ Translatetor</h3>
+        <p>FA â‡„ EN + RU / TR / UK / ID â€¢ Voiceâ†”Text.</p>
+        <div class="row" style="margin-top:10px"><a class="btn btn-ghost" href="../tools/translate/">Translate</a></div>
+        <div class="row" style="margin-top:10px"><a class="btn btn-primary" href="../tools/dictionary/">Open Dictionary</a></div>
       </article>
 
       <article class="card">
-        <h3>⚡ LIVE News</h3>
-        <p>Auto updates • multiple sources • read-aloud.</p>
-        <div class="actions"><a class="btn" href="tools/live-news/">Open LIVE News</a></div>
+        <span class="corner c1"></span><span class="corner c2"></span>
+        <h3>âš¡ LIVE News</h3>
+        <p>Auto updates â€¢ multiple sources â€¢ readâ€‘aloud.</p>
+        <div class="row" style="margin-top:10px"><a class="btn btn-primary" href="../tools/live-news/">Open LIVE News</a></div>
       </article>
-      
+
       <article class="card">
-        <h3>🖼️ My Art Collection & NFT</h3>
+        <span class="corner c1"></span><span class="corner c2"></span>
+        <h3>ðŸ–¼ï¸ My Art Collection & NFT</h3>
         <p>Fullscreen slider. Crisp. Fast.</p>
-        <div class="actions"><a class="btn" href="tools/gallery/">View Gallery</a></div>
+        <div class="row" style="margin-top:10px"><a class="btn btn-ghost" href="../tools/gallery/">View Gallery</a></div>
       </article>
 
       <article class="card">
-        <h3>🎧 Gravity-Music Z👽ne Player</h3>
+        <span class="corner c1"></span><span class="corner c2"></span>
+        <h3>ðŸŽ§ Gravityâ€‘Music Zone</h3>
         <p>Local player + URL + Spotify embed.</p>
-        <div class="actions"><a class="btn" href="tools/music/">Open Music</a></div>
+        <div class="row" style="margin-top:10px"><a class="btn btn-primary" href="../tools/music/">Open Music</a></div>
       </article>
     </section>
 
-    <section class="footer"><div class="note">© Gravity-Z👽ne</div></section>
+    <section class="footer"><div class="note">Â© Gravityâ€‘Zone â€¢ Prism UI â€¢ GitHub Pages</div></section>
   </div>
-
-  <script>
-    try{const tg=window.Telegram?.WebApp;tg?.ready();tg?.expand();}catch(e){}
-    const drawer=document.getElementById('drawer');
-    document.getElementById('openDrawer').onclick=()=>drawer.classList.add('active');
-    document.getElementById('closeDrawer').onclick=()=>drawer.classList.remove('active');
-    drawer.addEventListener('click',e=>{ if(e.target===drawer) drawer.classList.remove('active'); });
-  </script>
+  <script>try{const tg=window.Telegram?.WebApp;tg?.ready();tg?.expand();}catch(e){};</script>
 </body>
 </html>
