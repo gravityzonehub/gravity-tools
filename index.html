@@ -1,82 +1,96 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Gravity-Zone Tools</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0b0e14; --text:#f2f5f8; --hint:#c7d0df;
-    --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
-    --accent:#ff9800; --r:18px; --shadow:0 10px 28px rgba(0,0,0,.35);
-    --g1:#ff9800; --g2:#8a2be2; --g3:#00ffd0;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-  a{text-decoration:none;color:inherit}
-  .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px}
-  .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Gravity-Zone Tools</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0e14; --text:#f2f5f8; --hint:#c7d0df;
+      --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
+      --accent:#ff9800; --r:18px; --shadow:0 10px 28px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;margin:0;background:var(--bg);color:var(--text);
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif
+    }
+    a{text-decoration:none;color:inherit}
+    .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px}
+    .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
-  .header{
-    width:min(1100px,95%);margin-top:10px;padding:14px 16px;border-radius:var(--r);
-    background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(10px);
-    box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:12px
-  }
-  .brand{display:flex;align-items:center;gap:12px}
-  .disc{width:44px;height:44px;border-radius:12px;background:conic-gradient(from 210deg, var(--g1), var(--g2), var(--g3), var(--g1));position:relative;box-shadow:0 0 22px rgba(255,152,0,.25)}
-  .disc:after{content:"";position:absolute;inset:2px;border-radius:10px;background:#0c1119}
-  .title{font-weight:800;letter-spacing:-.2px}
-  .sub{color:var(--hint);font-size:13px;margin-top:2px}
-  .badge{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);font-size:12px}
+    .header{
+      width:min(1100px,95%);margin-top:10px;padding:12px 14px;border-radius:var(--r);
+      background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:12px
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .disc{width:40px;height:40px;border-radius:12px;background:conic-gradient(from 210deg, var(--accent), #8a2be2, #00ffd0, var(--accent));position:relative;box-shadow:0 0 22px rgba(255,152,0,.25)}
+    .disc:after{content:"";position:absolute;inset:2px;border-radius:10px;background:#0c1119}
+    .title{font-weight:800;font-size:18px}
+    .sub{color:var(--hint);font-size:12px}
+    .badge{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);font-size:12px}
 
-  .grid{width:min(1100px,95%);display:grid;gap:16px;margin:6px 0 18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .card{position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);border:1px solid var(--stroke);backdrop-filter:blur(8px);box-shadow:var(--shadow);padding:18px;transition:transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;display:flex;flex-direction:column;min-height:210px}
-  .card:hover{transform:translateY(-3px)}
-  .card:before{content:"";position:absolute;inset:-1px;border-radius:calc(var(--r) + 1px);padding:1px;background:linear-gradient(135deg, rgba(255,152,0,.55), rgba(138,43,226,.45), rgba(0,255,208,.45));opacity:0;transition:opacity .25s ease;-webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-  .card:hover:before{opacity:.8}
-  .corner{position:absolute;width:22px;height:22px;border-radius:50%;filter:blur(10px);opacity:.6;pointer-events:none}
-  .c1{top:-6px;left:-6px;background:radial-gradient(circle at 30% 30%, rgba(255,152,0,.65), transparent 60%)}
-  .c2{bottom:-8px;right:-8px;background:radial-gradient(circle at 70% 70%, rgba(138,43,226,.55), transparent 60%)}
-  .card h3{margin:0 0 6px;font-size:18px;font-weight:800}
-  .card p{margin:0;color:var(--hint);font-size:13.5px;line-height:1.7}
-  .actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
+    .grid{
+      width:min(1100px,95%);display:grid;gap:14px;margin:6px 0 18px;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr))
+    }
+    .card{
+      position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);
+      border:1px solid var(--stroke);backdrop-filter:blur(8px);box-shadow:var(--shadow);
+      padding:14px;transition:transform .18s ease;display:flex;flex-direction:column;min-height:200px
+    }
+    .card:hover{transform:translateY(-3px)}
+    .card h3{margin:0 0 4px;font-size:16px;font-weight:800}
+    .card p{margin:0;color:var(--hint);font-size:13px;line-height:1.55}
+    .actions{margin-top:auto;display:flex;gap:8px;flex-wrap:wrap}
 
-  /* === ONE STYLE FOR ALL BUTTONS (like your screenshot) === */
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:10px;
-    padding:12px 16px;border-radius:14px;
-    background:#1a1713;                 /* dark base */
-    border:1px solid var(--accent);      /* orange stroke */
-    color:var(--accent);                 /* orange text */
-    font-weight:800;font-size:14px;cursor:pointer;
-    transition:transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease
-  }
-  .btn:hover{background:#211c17;box-shadow:0 0 0 2px rgba(255,152,0,.15), 0 8px 18px rgba(0,0,0,.25)}
-  .btn:active{transform:translateY(1px) scale(.99)}
-  .btn:focus-visible{outline:none;box-shadow:0 0 0 6px rgba(255,152,0,.12)}
+    /* === ONE STYLE FOR ALL BUTTONS === */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:14px;
+      background:#1a1713;border:1px solid var(--accent);color:var(--accent);
+      font-weight:800;font-size:13px;cursor:pointer;
+      transition:transform .08s ease, box-shadow .2s ease, background .2s ease
+    }
+    .btn:hover{background:#211c17;box-shadow:0 0 10px rgba(255,152,0,.25)}
+    .btn:active{transform:translateY(1px) scale(.99)}
 
-  /* Hamburger & Drawer */
-  .hambtn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);cursor:pointer;font-weight:700;font-size:12px}
-  .hambtn .bars{width:16px;height:12px;position:relative}
-  .hambtn .bars:before,.hambtn .bars:after,.hambtn .mid{content:"";position:absolute;left:0;right:0;height:2px;background:#fff;border-radius:2px;opacity:.9}
-  .hambtn .bars:before{top:0}.hambtn .mid{top:5px}.hambtn .bars:after{bottom:0}
+    /* Hamburger styled like btn */
+    .hambtn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:14px;
+      background:#1a1713;border:1px solid var(--accent);color:var(--accent);
+      font-weight:800;font-size:13px;cursor:pointer;
+    }
+    .hambtn .bars{width:16px;height:12px;position:relative}
+    .hambtn .bars:before,.hambtn .bars:after,.hambtn .mid{
+      content:"";position:absolute;left:0;right:0;height:2px;background:var(--accent);border-radius:2px
+    }
+    .hambtn .bars:before{top:0}.hambtn .mid{top:5px}.hambtn .bars:after{bottom:0}
 
-  .drawer{position:fixed;inset:0 0 0 auto;width:min(340px,92%);background:#0d121b;border-left:1px solid var(--stroke);box-shadow:-20px 0 40px rgba(0,0,0,.55);transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;z-index:50}
-  .drawer.active{transform:translateX(0)}
-  .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--stroke)}
-  .drawer-title{font-weight:800}
-  .drawer-close{background:transparent;border:1px solid var(--stroke);color:var(--text);padding:6px 10px;border-radius:10px;cursor:pointer}
-  .links{display:grid;gap:10px;padding:14px 16px}
-  .linkitem{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;background:rgba(255,255,255,.04);font-weight:600}
-  .linkitem:hover{background:rgba(255,255,255,.07)}
-</style>
+    /* Drawer */
+    .drawer{position:fixed;inset:0 0 0 auto;width:min(340px,92%);background:#0d121b;
+      border-left:1px solid var(--stroke);box-shadow:-20px 0 40px rgba(0,0,0,.55);
+      transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;z-index:50}
+    .drawer.active{transform:translateX(0)}
+    .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--stroke)}
+    .drawer-title{font-weight:800;color:var(--accent)}
+    .drawer-close{background:transparent;border:1px solid var(--stroke);color:var(--text);padding:6px 10px;border-radius:10px;cursor:pointer}
+    .links{display:grid;gap:10px;padding:14px 16px}
+    .linkitem{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;background:rgba(255,255,255,.04);font-weight:600}
+    .linkitem:hover{background:rgba(255,255,255,.07)}
+
+    .footer{width:min(1100px,95%);display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:8px}
+    .note{padding:12px 14px;background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);color:var(--hint);font-size:12px;text-align:center;backdrop-filter:blur(8px)}
+  </style>
 </head>
 <body>
   <div class="wrap">
     <header class="header">
       <div class="brand">
-        <div class="disc" aria-hidden="true"></div>
+        <div class="disc"></div>
         <div>
           <div class="title">Gravity-Zone Tools</div>
           <div class="sub">We will convert all your accounts to Premium</div>
@@ -85,7 +99,6 @@
       <div class="row">
         <a class="badge" href="tools/ai/">AI Quick Chat</a>
         <span class="badge">v1 • Prism</span>
-        <!-- NEW BUTTON: My other platforms -->
         <button class="hambtn" id="openDrawer">
           <span class="bars"><span class="mid"></span></span>
           My other platforms
@@ -100,7 +113,6 @@
         <button class="drawer-close" id="closeDrawer">Close</button>
       </div>
       <nav class="links">
-        <!-- replace links with yours -->
         <a class="linkitem" href="https://instagram.com/" target="_blank">📷 Instagram</a>
         <a class="linkitem" href="https://t.me/" target="_blank">📡 Telegram</a>
         <a class="linkitem" href="https://soundcloud.com/" target="_blank">🎶 SoundCloud</a>
@@ -113,7 +125,6 @@
 
     <section class="grid">
       <article class="card">
-        <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🪙 Airdrops & News</h3>
         <p>Crypto news + verified airdrops (auto-refresh).</p>
         <div class="actions">
@@ -123,21 +134,18 @@
       </article>
 
       <article class="card">
-        <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🔐 Proxy Finder Zone</h3>
         <p>Stable, auto-generated Telegram proxies.</p>
         <div class="actions"><a class="btn" href="tools/proxy/">Get Proxy</a></div>
       </article>
 
       <article class="card">
-        <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🧠 AI Chat Models</h3>
         <p>GPT</p>
         <div class="actions"><a class="btn" href="tools/ai/">Start Chat</a></div>
       </article>
 
       <article class="card">
-        <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🗣 Translator & converter</h3>
         <p>FA ⇄ EN + RU / TR / UA / ID • Voice↔Text.</p>
         <div class="actions">
@@ -147,21 +155,18 @@
       </article>
 
       <article class="card">
-        <span class="corner c1"></span><span class="corner c2"></span>
         <h3>⚡ LIVE News</h3>
         <p>Auto updates • multiple sources • read-aloud.</p>
         <div class="actions"><a class="btn" href="tools/live-news/">Open LIVE News</a></div>
       </article>
       
       <article class="card">
-        <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🖼️ My Art Collection & NFT</h3>
         <p>Fullscreen slider. Crisp. Fast.</p>
         <div class="actions"><a class="btn" href="tools/gallery/">View Gallery</a></div>
       </article>
 
       <article class="card">
-        <span class="corner c1"></span><span class="corner c2"></span>
         <h3>🎧 Gravity-Music Z👽ne Player</h3>
         <p>Local player + URL + Spotify embed.</p>
         <div class="actions"><a class="btn" href="tools/music/">Open Music</a></div>
@@ -180,4 +185,3 @@
   </script>
 </body>
 </html>
-```
