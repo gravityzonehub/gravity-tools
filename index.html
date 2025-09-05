@@ -4,13 +4,12 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Gravity-Zone Tools</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0b0e14; --text:#f2f5f8; --hint:#c7d0df;
     --panel:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.12);
     --accent:#ff9800; --r:18px; --shadow:0 10px 28px rgba(0,0,0,.35);
-    --neon1:#ff9800; --neon2:#8a2be2; --neon3:#00ffd0;
   }
   *{box-sizing:border-box}
   html,body{
@@ -20,7 +19,6 @@
     letter-spacing:-.1px;
   }
   a{text-decoration:none;color:inherit}
-
   .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px}
   .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 
@@ -30,11 +28,41 @@
     box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:12px
   }
   .brand{display:flex;align-items:center;gap:12px}
-  .disc{width:40px;height:40px;border-radius:12px;background:conic-gradient(from 210deg, var(--neon1), var(--neon2), var(--neon3), var(--neon1));position:relative;box-shadow:0 0 22px rgba(255,152,0,.25)}
+  .disc{width:40px;height:40px;border-radius:12px;background:conic-gradient(from 210deg,#ff9800,#8a2be2,#00ffd0,#ff9800);position:relative;box-shadow:0 0 22px rgba(255,152,0,.25)}
   .disc:after{content:"";position:absolute;inset:2px;border-radius:10px;background:#0c1119}
   .title{font-weight:800;letter-spacing:-.2px;font-size:18px}
   .sub{color:var(--hint);font-size:12px;margin-top:1px}
   .badge{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);font-size:12px}
+
+  /* Hamburger */
+  .hambtn{
+    display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;
+    background:rgba(255,255,255,.06);border:1px solid var(--stroke);cursor:pointer;font-weight:700;font-size:12px;
+  }
+  .hambtn .bars{width:16px;height:12px;position:relative}
+  .hambtn .bars:before,.hambtn .bars:after, .hambtn .mid{
+    content:"";position:absolute;left:0;right:0;height:2px;background:#fff;border-radius:2px;opacity:.9
+  }
+  .hambtn .bars:before{top:0}
+  .hambtn .mid{top:5px}
+  .hambtn .bars:after{bottom:0}
+
+  /* Drawer */
+  .drawer{
+    position:fixed;inset:0 0 0 auto;width:min(340px,92%);background:#0d121b;border-left:1px solid var(--stroke);
+    box-shadow:-20px 0 40px rgba(0,0,0,.55);transform:translateX(100%);transition:transform .25s ease;
+    display:flex;flex-direction:column;z-index:50
+  }
+  .drawer.active{transform:translateX(0)}
+  .drawer-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--stroke)}
+  .drawer-title{font-weight:800}
+  .drawer-close{background:transparent;border:1px solid var(--stroke);color:var(--text);padding:6px 10px;border-radius:10px;cursor:pointer}
+  .links{display:grid;gap:10px;padding:14px 16px}
+  .linkitem{
+    display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--stroke);border-radius:12px;
+    background:rgba(255,255,255,.04);font-weight:600
+  }
+  .linkitem:hover{background:rgba(255,255,255,.07)}
 
   .grid{
     width:min(1100px,95%);display:grid;gap:16px;margin:6px 0 18px;
@@ -44,33 +72,25 @@
     position:relative;overflow:hidden;border-radius:var(--r);background:var(--panel);
     border:1px solid var(--stroke);backdrop-filter:blur(8px);box-shadow:var(--shadow);
     padding:16px;transition:transform .18s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-    display:flex; flex-direction:column; min-height:210px;
+    display:flex;flex-direction:column;min-height:210px;
   }
   .card:hover{transform:translateY(-3px)}
   .card h3{margin:0 0 6px;font-size:16px;font-weight:800}
   .card p{margin:0;color:var(--hint);font-size:13px;line-height:1.65}
-  .actions{margin-top:auto; display:flex; gap:10px; flex-wrap:wrap;}
+  .actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}
 
-  /* دکمه یکنواخت: زمینه مشکی + متن نارنجی + قاب نئون */
+  /* Buttons */
   .btn{
-    position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    padding:11px 14px;border-radius:14px;background:#0f141b;border:1px solid rgba(255,255,255,.16);
-    color:var(--accent); font-weight:800;font-size:12.5px; letter-spacing:.1px; cursor:pointer;
-    transition:transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-    text-transform:none;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 14px;border-radius:14px;
+    font-weight:800;font-size:12.5px;letter-spacing:.1px;cursor:pointer;transition:transform .08s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
   }
   .btn:active{transform:translateY(1px) scale(.99)}
   .btn:focus-visible{outline:none;box-shadow:0 0 0 6px rgba(255,152,0,.12)}
-  .btn::after{
-    content:""; position:absolute; inset:0; border-radius:inherit; padding:1px;
-    background:linear-gradient(135deg, var(--neon1), var(--neon2), var(--neon3));
-    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; opacity:.9;
-  }
-  .btn:hover{background:#121824; box-shadow:0 0 14px rgba(255,152,0,.22), 0 0 22px rgba(138,43,226,.15), 0 0 20px rgba(0,255,208,.14)}
-
-  /* در صورت نیاز: نسخه پر (فقط وقتی خودت کلاس بدی) */
-  .btn--filled{ background:var(--accent); color:#000; border-color:var(--accent); }
+  .btn-primary{background:var(--accent);border:1px solid var(--accent);color:#000;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+  .btn-secondary{background:rgba(255,255,255,.06);border:1px solid var(--stroke);color:var(--text)}
+  .btn-secondary:hover{background:rgba(255,255,255,.09)}
+  .footer{width:min(1100px,95%);display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-bottom:8px}
+  .note{padding:12px 14px;background:var(--panel);border:1px solid var(--stroke);border-radius:var(--r);color:var(--hint);font-size:12px;text-align:center;backdrop-filter:blur(8px)}
 </style>
 </head>
 <body>
@@ -86,76 +106,91 @@
       <div class="row">
         <a class="badge" href="tools/ai/">AI Quick Chat</a>
         <span class="badge">v1 • Prism</span>
+        <button class="hambtn" id="openDrawer">
+          <span class="bars"><span class="mid"></span></span>
+          My other platforms
+        </button>
       </div>
     </header>
+
+    <!-- Drawer -->
+    <aside class="drawer" id="drawer">
+      <div class="drawer-header">
+        <div class="drawer-title">My other platforms</div>
+        <button class="drawer-close" id="closeDrawer">Close</button>
+      </div>
+      <nav class="links">
+        <!-- لینک‌ها رو با آدرس‌هات عوض کن -->
+        <a class="linkitem" href="https://instagram.com/" target="_blank">📷 Instagram</a>
+        <a class="linkitem" href="https://t.me/" target="_blank">📡 Telegram</a>
+        <a class="linkitem" href="https://soundcloud.com/" target="_blank">🎶 SoundCloud</a>
+        <a class="linkitem" href="https://github.com/gravityzonehub" target="_blank">💻 GitHub</a>
+        <a class="linkitem" href="https://discord.com/" target="_blank">👾 Discord</a>
+        <a class="linkitem" href="https://youtube.com/" target="_blank">▶️ YouTube</a>
+        <a class="linkitem" href="https://gravityzone.example" target="_blank">🌐 Website</a>
+      </nav>
+    </aside>
 
     <section class="grid">
       <article class="card">
         <h3>🪙 Airdrops & News</h3>
         <p>Crypto news + verified airdrops (auto-refresh).</p>
         <div class="actions">
-          <a class="btn" href="tools/crypto/">Open</a>
-          <a class="btn" href="tools/crypto/">Details</a>
+          <a class="btn btn-primary" href="tools/crypto/">Open</a>
+          <a class="btn btn-secondary" href="tools/crypto/">Details</a>
         </div>
       </article>
 
       <article class="card">
         <h3>🔐 Proxy Finder Zone</h3>
         <p>Stable, auto-generated Telegram proxies.</p>
-        <div class="actions">
-          <a class="btn" href="tools/proxy/">Get Proxy</a>
-        </div>
+        <div class="actions"><a class="btn btn-primary" href="tools/proxy/">Get Proxy</a></div>
       </article>
 
       <article class="card">
         <h3>🧠 AI Chat Models</h3>
         <p>GPT</p>
-        <div class="actions">
-          <a class="btn" href="tools/ai/">Start Chat</a>
-        </div>
+        <div class="actions"><a class="btn btn-primary" href="tools/ai/">Start Chat</a></div>
       </article>
 
       <article class="card">
         <h3>🗣 Translator & converter</h3>
         <p>FA ⇄ EN + RU / TR / UA / ID • Voice↔Text.</p>
         <div class="actions">
-          <a class="btn" href="tools/translate/">Translate</a>
-          <a class="btn" href="tools/dictionary/">Open Dictionary</a>
+          <a class="btn btn-primary" href="tools/translate/">Translate</a>
+          <a class="btn btn-secondary" href="tools/dictionary/">Open Dictionary</a>
         </div>
       </article>
 
       <article class="card">
         <h3>⚡ LIVE News</h3>
         <p>Auto updates • multiple sources • read-aloud.</p>
-        <div class="actions">
-          <a class="btn" href="tools/live-news/">Open LIVE News</a>
-        </div>
+        <div class="actions"><a class="btn btn-primary" href="tools/live-news/">Open LIVE News</a></div>
       </article>
       
       <article class="card">
         <h3>🖼️ My Art Collection & NFT</h3>
         <p>Fullscreen slider. Crisp. Fast.</p>
-        <div class="actions">
-          <a class="btn" href="tools/gallery/">View Gallery</a>
-        </div>
+        <div class="actions"><a class="btn btn-secondary" href="tools/gallery/">View Gallery</a></div>
       </article>
 
       <article class="card">
         <h3>🎧 Gravity-Music Z👽ne Player</h3>
         <p>Local player + URL + Spotify embed.</p>
-        <div class="actions">
-          <a class="btn" href="tools/music/">Open Music</a>
-        </div>
+        <div class="actions"><a class="btn btn-primary" href="tools/music/">Open Music</a></div>
       </article>
     </section>
 
-    <section class="footer">
-      <div class="badge" style="justify-self:center">© Gravity-Z👽ne</div>
-    </section>
+    <section class="footer"><div class="note">© Gravity-Z👽ne</div></section>
   </div>
 
   <script>
     try{const tg=window.Telegram?.WebApp; tg?.ready(); tg?.expand();}catch(e){}
+    const drawer = document.getElementById('drawer');
+    document.getElementById('openDrawer').onclick = ()=> drawer.classList.add('active');
+    document.getElementById('closeDrawer').onclick = ()=> drawer.classList.remove('active');
+    // بستن با بیرون-کلیک
+    drawer.addEventListener('click', e => { if(e.target===drawer) drawer.classList.remove('active'); });
   </script>
 </body>
 </html>
